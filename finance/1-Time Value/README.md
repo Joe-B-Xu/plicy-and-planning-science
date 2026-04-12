@@ -1,34 +1,34 @@
 # 1-Time Value
 
-This project is a small Python calculator for the lecture topics around the time value of money.
+このプロジェクトは、お金の時間価値に関する講義内容を計算できる Python プログラムです。
 
-Included modules:
+含まれているモジュール:
 
-- Timeline and cash flow table
-- Future value (`FV`)
-- Present value (`PV`)
-- Net present value (`NPV`)
-- Perpetuity
-- Growing perpetuity
-- Annuity present value
-- Annuity future value
-- Growing annuity present value
-- Loan payment per period
-- Remaining loan balance
-- Internal rate of return (`IRR`)
+- 時間軸とキャッシュフロー表
+- 将来価値 (`FV`)
+- 現在価値 (`PV`)
+- 正味現在価値 (`NPV`)
+- 永久債
+- 成長型永久債
+- 年金現価
+- 年金終価
+- 成長型年金現価
+- 借入金の毎期返済額
+- 借入残高
+- 内部収益率 (`IRR`)
 
-## Run
+## 実行方法
 
 ```bash
 python time_value_calculator.py
 ```
 
-You can choose:
+起動後に次のどちらかを選べます。
 
-- Interactive mode: enter your own variables from the terminal
-- Demo mode: see built-in sample calculations
+- 対話モード: 変数を自分で入力して計算
+- デモモード: あらかじめ用意した例で計算結果を確認
 
-## Notes
+## 注意
 
-- Rates should be entered in decimal form. For example, `5%` should be entered as `0.05`.
-- Cash flows should be entered from `t0`, separated by commas. Example: `-1000,300,400,500`
+- 利率は小数で入力してください。たとえば `5%` は `0.05` と入力します。
+- キャッシュフローは `t0` から順に、カンマ区切りで入力してください。例: `-1000,300,400,500`
