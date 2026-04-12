@@ -123,7 +123,7 @@ class TimelineEntry:
 def parse_cashflows(raw_text: str) -> List[float]:
     parts = [part.strip() for part in raw_text.replace(";", ",").split(",") if part.strip()]
     if not parts:
-        raise ValueError("Please enter at least one cash flow.")
+        raise ValueError("少なくとも 1 つのキャッシュフローを入力してください。")
     return [float(part) for part in parts]
 
 
@@ -155,103 +155,103 @@ def show_result(label: str, value: float, percentage: bool = False) -> None:
 
 def run_interactive_calculator() -> None:
     menu = {
-        "1": "Timeline and cash flow",
-        "2": "Future value (FV)",
-        "3": "Present value (PV)",
-        "4": "Net present value (NPV)",
-        "5": "Perpetuity",
-        "6": "Growing perpetuity",
-        "7": "Annuity present value",
-        "8": "Annuity future value",
-        "9": "Growing annuity present value",
-        "10": "Loan payment per period",
-        "11": "Remaining loan balance",
-        "12": "Internal rate of return (IRR)",
-        "0": "Exit",
+        "1": "時間軸とキャッシュフロー",
+        "2": "将来価値 (FV)",
+        "3": "現在価値 (PV)",
+        "4": "正味現在価値 (NPV)",
+        "5": "永久債",
+        "6": "成長型永久債",
+        "7": "年金現価",
+        "8": "年金終価",
+        "9": "成長型年金現価",
+        "10": "借入金の毎期返済額",
+        "11": "借入残高",
+        "12": "内部収益率 (IRR)",
+        "0": "終了",
     }
 
     while True:
-        print("\nTime Value of Money Calculator")
+        print("\nお金の時間価値計算プログラム")
         for key, name in menu.items():
             print(f"{key}. {name}")
-        choice = input("Choose a module: ").strip()
+        choice = input("計算したい項目を選んでください: ").strip()
         try:
             if choice == "1":
                 cashflows = parse_cashflows(
-                    input("Enter cash flows separated by commas, for example -1000,300,400,500: ")
+                    input("キャッシュフローをカンマ区切りで入力してください。例: -1000,300,400,500: ")
                 )
                 print(timeline_as_table(cashflows))
             elif choice == "2":
-                pv = read_float("Enter present value (PV): ")
-                rate = read_float("Enter rate per period, for example 0.05: ")
-                periods = read_int("Enter number of periods: ")
-                show_result("Future value", future_value(pv, rate, periods))
+                pv = read_float("現在価値 (PV) を入力してください: ")
+                rate = read_float("1 期間あたりの利率を入力してください。例: 0.05: ")
+                periods = read_int("期間数を入力してください: ")
+                show_result("将来価値", future_value(pv, rate, periods))
             elif choice == "3":
-                fv = read_float("Enter future value (FV): ")
-                rate = read_float("Enter rate per period, for example 0.05: ")
-                periods = read_int("Enter number of periods: ")
-                show_result("Present value", present_value(fv, rate, periods))
+                fv = read_float("将来価値 (FV) を入力してください: ")
+                rate = read_float("1 期間あたりの利率を入力してください。例: 0.05: ")
+                periods = read_int("期間数を入力してください: ")
+                show_result("現在価値", present_value(fv, rate, periods))
             elif choice == "4":
-                rate = read_float("Enter discount rate, for example 0.08: ")
-                cashflows = parse_cashflows(input("Enter cash flows from t0, separated by commas: "))
-                show_result("Net present value", npv(rate, cashflows))
+                rate = read_float("割引率を入力してください。例: 0.08: ")
+                cashflows = parse_cashflows(input("t0 からのキャッシュフローをカンマ区切りで入力してください: "))
+                show_result("正味現在価値", npv(rate, cashflows))
             elif choice == "5":
-                cashflow = read_float("Enter fixed cash flow per period: ")
-                rate = read_float("Enter discount rate: ")
-                show_result("Perpetuity present value", perpetuity_present_value(cashflow, rate))
+                cashflow = read_float("毎期の一定キャッシュフローを入力してください: ")
+                rate = read_float("割引率を入力してください: ")
+                show_result("永久債の現在価値", perpetuity_present_value(cashflow, rate))
             elif choice == "6":
-                cashflow = read_float("Enter next period cash flow C1: ")
-                rate = read_float("Enter discount rate r: ")
-                growth = read_float("Enter growth rate g: ")
+                cashflow = read_float("次期のキャッシュフロー C1 を入力してください: ")
+                rate = read_float("割引率 r を入力してください: ")
+                growth = read_float("成長率 g を入力してください: ")
                 show_result(
-                    "Growing perpetuity present value",
+                    "成長型永久債の現在価値",
                     growing_perpetuity_present_value(cashflow, rate, growth),
                 )
             elif choice == "7":
-                payment = read_float("Enter payment each period: ")
-                rate = read_float("Enter rate: ")
-                periods = read_int("Enter number of periods: ")
-                show_result("Annuity present value", annuity_present_value(payment, rate, periods))
+                payment = read_float("毎期の支払額を入力してください: ")
+                rate = read_float("利率を入力してください: ")
+                periods = read_int("期間数を入力してください: ")
+                show_result("年金現価", annuity_present_value(payment, rate, periods))
             elif choice == "8":
-                payment = read_float("Enter payment each period: ")
-                rate = read_float("Enter rate: ")
-                periods = read_int("Enter number of periods: ")
-                show_result("Annuity future value", annuity_future_value(payment, rate, periods))
+                payment = read_float("毎期の支払額を入力してください: ")
+                rate = read_float("利率を入力してください: ")
+                periods = read_int("期間数を入力してください: ")
+                show_result("年金終価", annuity_future_value(payment, rate, periods))
             elif choice == "9":
-                payment = read_float("Enter next period payment C1: ")
-                rate = read_float("Enter discount rate r: ")
-                growth = read_float("Enter growth rate g: ")
-                periods = read_int("Enter number of periods n: ")
+                payment = read_float("次期の支払額 C1 を入力してください: ")
+                rate = read_float("割引率 r を入力してください: ")
+                growth = read_float("成長率 g を入力してください: ")
+                periods = read_int("期間数 n を入力してください: ")
                 show_result(
-                    "Growing annuity present value",
+                    "成長型年金現価",
                     growing_annuity_present_value(payment, rate, growth, periods),
                 )
             elif choice == "10":
-                principal = read_float("Enter loan principal: ")
-                rate = read_float("Enter rate per period: ")
-                periods = read_int("Enter total number of repayment periods: ")
-                show_result("Payment per period", loan_payment(principal, rate, periods))
+                principal = read_float("借入元本を入力してください: ")
+                rate = read_float("1 期間あたりの利率を入力してください: ")
+                periods = read_int("総返済回数を入力してください: ")
+                show_result("毎期返済額", loan_payment(principal, rate, periods))
             elif choice == "11":
-                principal = read_float("Enter loan principal: ")
-                rate = read_float("Enter rate per period: ")
-                periods = read_int("Enter total number of repayment periods: ")
-                paid = read_int("Enter number of periods already paid: ")
-                show_result("Remaining loan balance", remaining_loan_balance(principal, rate, periods, paid))
+                principal = read_float("借入元本を入力してください: ")
+                rate = read_float("1 期間あたりの利率を入力してください: ")
+                periods = read_int("総返済回数を入力してください: ")
+                paid = read_int("すでに返済した回数を入力してください: ")
+                show_result("借入残高", remaining_loan_balance(principal, rate, periods, paid))
             elif choice == "12":
-                cashflows = parse_cashflows(input("Enter cash flows from t0, separated by commas: "))
-                show_result("Internal rate of return", irr(cashflows), percentage=True)
+                cashflows = parse_cashflows(input("t0 からのキャッシュフローをカンマ区切りで入力してください: "))
+                show_result("内部収益率", irr(cashflows), percentage=True)
             elif choice == "0":
-                print("Exited.")
+                print("終了しました。")
                 break
             else:
-                print("Invalid choice. Please try again.")
+                print("無効な選択です。もう一度入力してください。")
         except ValueError as error:
-            print(f"Input or calculation error: {error}")
+            print(f"入力または計算エラー: {error}")
 
 
 def demo() -> None:
     sample_cashflows = [-1000, 300, 420, 680]
-    print("Sample cash flow timeline")
+    print("サンプルのキャッシュフロー時間軸")
     print(timeline_as_table(sample_cashflows))
     print()
     show_result("FV of 1000 at 5% for 3 periods", future_value(1000, 0.05, 3))
@@ -266,9 +266,9 @@ def demo() -> None:
 
 
 if __name__ == "__main__":
-    print("1. Run interactive calculator")
-    print("2. Run demo")
-    mode = input("Choose mode (default 1): ").strip() or "1"
+    print("1. 対話モードを実行")
+    print("2. デモを実行")
+    mode = input("モードを選んでください（デフォルトは 1）: ").strip() or "1"
     if mode == "2":
         demo()
     else:
